@@ -11,9 +11,20 @@ export default {
     attention: "#E83F5B",
     attention_light: "rgba(232,63,91,.5)",
 
-    shape: "#FFFFFF",
-    title: "#363F5F",
-    text: "#969CB2",
-    background: "#F0F2F5",
+    shape: "#969CB2",
+    title: "#F0F2F5",
+    text: "#F0F2F5",
+    background: "#363F5F",
+
+    // shape: "#FFFFFF",
+    // title: "#363F5F",
+    // text: "#969CB2",
+    // background: "#F0F2F5",
+  },
+
+  fonts: {
+    regular: "Poppins_400Regular",
+    medium: "Poppins_500Medium",
+    bold: "Poppins_700Bold",
   },
 };
