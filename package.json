@@ -4,22 +4,32 @@
   "main": "index.js",
   "scripts": {
     "start": "expo start --dev-client",
+<<<<<<< HEAD
     "expo": "expo start",
+=======
+>>>>>>> 74a704d60bdd7e35d79f3430908cb3d6de26cdcd
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@expo-google-fonts/poppins": "^0.2.2",
     "expo": "~44.0.2",
     "expo-app-loading": "~1.3.0",
     "expo-font": "~10.0.4",
+=======
+    "expo": "~44.0.2",
+>>>>>>> 74a704d60bdd7e35d79f3430908cb3d6de26cdcd
     "expo-splash-screen": "~0.14.1",
     "expo-status-bar": "~1.2.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
+<<<<<<< HEAD
     "react-native-responsive-fontsize": "^0.5.1",
+=======
+>>>>>>> 74a704d60bdd7e35d79f3430908cb3d6de26cdcd
     "react-native-web": "0.17.1",
     "styled-components": "^5.3.3"
   },
