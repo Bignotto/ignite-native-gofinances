@@ -24,6 +24,8 @@ export const UserInfo = styled.View`
 export const UserWrapper = styled.View`
   width: 100%;
   padding: 0 24px;
+  margin-top: ${RFValue(28)}px;
+
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -55,4 +57,14 @@ export const UserName = styled.Text`
 export const Icon = styled(Feather)`
   font-size: ${RFValue(24)}px;
   color: ${({ theme }) => theme.colors.secondary};
+`;
+
+export const HighlightCards = styled.ScrollView.attrs({
+  horizontal: true,
+  showsHorizontalScrollIndicator: false,
+  contentContainerStyle: { paddingHorizontal: 12 },
+})`
+  width: 100%;
+  position: absolute;
+  margin-top: ${RFPercentage(20)}px;
 `;
