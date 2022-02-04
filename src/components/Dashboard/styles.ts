@@ -42,14 +42,14 @@ export const User = styled.View`
 `;
 
 export const UserGreeting = styled.Text`
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.shape};
 
   font-size: ${RFValue(18)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
 `;
 
 export const UserName = styled.Text`
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.shape};
   font-size: ${RFValue(18)}px;
   font-family: ${({ theme }) => theme.fonts.bold};
 `;
@@ -68,3 +68,17 @@ export const HighlightCards = styled.ScrollView.attrs({
   position: absolute;
   margin-top: ${RFPercentage(20)}px;
 `;
+
+export const TransactionCards = styled.View`
+  flex: 1%;
+  padding: 0 24px;
+  margin-top: ${RFPercentage(24)}px;
+`;
+
+export const Title = styled.Text`
+  font-size: ${RFValue(18)}px;
+  font-family: ${({ theme }) => theme.fonts.regular};
+  margin-bottom: 16px;
+`;
+
+export const TransactionsList = styled.FlatList``;
