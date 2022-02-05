@@ -1,6 +1,6 @@
 import React from "react";
 import { HighlightCard } from "../HighlightCard";
-import { TransactionCard } from "../TransactionCard";
+import { TransactionCard, TransactionCardsProps } from "../TransactionCard";
 import {
   Container,
   Header,
@@ -17,30 +17,42 @@ import {
   TransactionsList,
 } from "./styles";
 
+export interface CardListProps extends TransactionCardsProps {
+  id: string;
+}
+
 export function Dashboard() {
-  const cardData = [
+  const cardData: CardListProps[] = [
     {
+      id: "1",
+      type: "positive",
       title: "Desenvolvimento de Site",
       amount: "R$ 1.740,00",
       transactionDate: "12/01/2022",
       category: { name: "Vendas", icon: "dollar-sign" },
     },
     {
-      title: "Desenvolvimento de Site",
-      amount: "R$ 1.740,00",
-      transactionDate: "12/01/2022",
-      category: { name: "Vendas", icon: "dollar-sign" },
+      id: "2",
+      type: "negative",
+      title: "Café com Cookies",
+      amount: "R$ 30,00",
+      transactionDate: "10/01/2022",
+      category: { name: "Snacks", icon: "coffee" },
     },
     {
-      title: "Desenvolvimento de Site",
-      amount: "R$ 1.740,00",
-      transactionDate: "12/01/2022",
-      category: { name: "Vendas", icon: "dollar-sign" },
+      id: "3",
+      type: "negative",
+      title: "Pizza",
+      amount: "R$ 3.740,00",
+      transactionDate: "8/01/2022",
+      category: { name: "Snacks", icon: "coffee" },
     },
     {
-      title: "Desenvolvimento de Site",
-      amount: "R$ 1.740,00",
-      transactionDate: "12/01/2022",
+      id: "4",
+      type: "positive",
+      title: "Freelance",
+      amount: "R$ 5.740,00",
+      transactionDate: "5/01/2022",
       category: { name: "Vendas", icon: "dollar-sign" },
     },
   ];
@@ -93,8 +105,8 @@ export function Dashboard() {
         <Title>Transações</Title>
         <TransactionsList
           data={cardData}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => <TransactionCard data={item} />}
-          showsVerticalScrollIndicator={false}
         />
       </TransactionCards>
     </Container>
