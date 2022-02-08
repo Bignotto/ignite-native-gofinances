@@ -11,8 +11,9 @@ import {
 } from "@expo-google-fonts/poppins";
 
 import theme from "./src/global/styles/theme";
-import { Dashboard } from "./src/components/Dashboard";
+// import { Dashboard } from "./src/components/Dashboard";
 import { StatusBar } from "expo-status-bar";
+import { Register } from "./src/screens/Register";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -27,7 +28,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <StatusBar style="inverted" />
-      <Dashboard />
+      <Register />
     </ThemeProvider>
   );
 }
