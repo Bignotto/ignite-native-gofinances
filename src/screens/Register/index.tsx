@@ -19,10 +19,10 @@ export function Register() {
   const [transactionType, setTransactionType] = useState("up");
   const [categoryModalOpen, setCategoryModalOpen] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<{
-    id: string;
+    key: string;
     name: string;
   }>({
-    id: "category",
+    key: "category",
     name: "Categoria",
   });
 
@@ -59,7 +59,7 @@ export function Register() {
             />
           </TransactionTypes>
           <CategorySelectButton
-            title="Categoria"
+            title={selectedCategory.name}
             onPress={handleOpenSelectCategoryModal}
           />
         </Fields>

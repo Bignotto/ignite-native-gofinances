@@ -15,24 +15,28 @@ import {
 } from "./styles";
 
 interface Category {
-  id: string;
+  key: string;
   name: string;
 }
 
 interface Props {
-  category?: Category;
-  setCategory?: (category: Category) => void;
-  colseSelectCategory?: () => void;
+  category: Category;
+  setCategory: (category: Category) => void;
+  colseSelectCategory: () => void;
 }
 export function CategorySelect({
   category,
   setCategory,
   colseSelectCategory,
 }: Props) {
+  function handleSelectCategory(category: Category) {
+    setCategory(category);
+  }
+
   return (
     <Container>
       <Header>
-        <Title>{category?.name}</Title>
+        <Title>Selecionar Categoria</Title>
       </Header>
 
       <FlatList
@@ -40,7 +44,10 @@ export function CategorySelect({
         style={{ flex: 1, width: "100%" }}
         keyExtractor={(item) => item.key}
         renderItem={({ item }) => (
-          <Category>
+          <Category
+            onPress={() => handleSelectCategory(item)}
+            isSelected={item.key === category?.key}
+          >
             <Icon name={item.icon} />
             <Name>{item.name}</Name>
           </Category>
