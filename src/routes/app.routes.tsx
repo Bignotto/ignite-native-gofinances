@@ -8,6 +8,14 @@ const { Navigator, Screen } = createBottomTabNavigator();
 
 export function AppRoutes() {
   return (
+    //aula Estilizando a Tab Navigation
+    //TODO:styling buttons
+    //6m00s
+
+    //TODO:styling each button
+    //import vector icons 8m00s
+    //9m40
+
     <Navigator>
       <Screen name="Listagem" component={Dashboard} />
       <Screen name="Cadastrar" component={Register} />
