@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { HighlightCard } from "../../components/HighlightCard";
 import {
   TransactionCard,
@@ -25,40 +27,19 @@ export interface CardListProps extends TransactionCardsProps {
 }
 
 export function Dashboard() {
-  const cardData: CardListProps[] = [
-    {
-      id: "1",
-      type: "positive",
-      title: "Desenvolvimento de Site",
-      amount: "R$ 1.740,00",
-      transactionDate: "12/01/2022",
-      category: { name: "Vendas", icon: "dollar-sign" },
-    },
-    {
-      id: "2",
-      type: "negative",
-      title: "Café com Cookies",
-      amount: "R$ 30,00",
-      transactionDate: "10/01/2022",
-      category: { name: "Snacks", icon: "coffee" },
-    },
-    {
-      id: "3",
-      type: "negative",
-      title: "Pizza",
-      amount: "R$ 3.740,00",
-      transactionDate: "8/01/2022",
-      category: { name: "Snacks", icon: "coffee" },
-    },
-    {
-      id: "4",
-      type: "positive",
-      title: "Freelance",
-      amount: "R$ 5.740,00",
-      transactionDate: "5/01/2022",
-      category: { name: "Vendas", icon: "dollar-sign" },
-    },
-  ];
+  const [cardData, setCardData] = useState<CardListProps[]>([]);
+
+  async function loadTransactions() {
+    const dataKey = "@gofinances/transactions";
+
+    const storageData = await AsyncStorage.getItem(dataKey);
+    const transactions = storageData ? JSON.parse(storageData) : [];
+
+    //TODO: format transactions
+    const formatedTransactions = transactions.map((item) => {});
+  }
+
+  useEffect(() => {}, []);
 
   return (
     <Container>
