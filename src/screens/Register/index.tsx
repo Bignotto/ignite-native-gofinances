@@ -74,12 +74,13 @@ export function Register() {
       amount,
       transactionType,
       category: selectedCategory.key,
-      date: new Date(),
+      date: Date.now(),
     };
 
     try {
       const storageData = await AsyncStorage.getItem(dataKey);
       const transactions = storageData ? JSON.parse(storageData) : [];
+      console.log({ transactions });
 
       const newTransactions = [...transactions, newTransaction];
 
@@ -94,8 +95,6 @@ export function Register() {
       console.log(error);
       Alert.alert("Algum proglema com async storage");
     }
-
-    console.log({ name, amount });
   }
 
   function handleSelectType(type: "up" | "down") {

@@ -36,10 +36,39 @@ export function Dashboard() {
     const transactions = storageData ? JSON.parse(storageData) : [];
 
     //TODO: format transactions
-    const formatedTransactions = transactions.map((item) => {});
+    const formatedTransactions: CardListProps[] = transactions.map(
+      (item: CardListProps) => {
+        const fAmount = Number(item.amount).toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        });
+
+        console.log(item.transactionDate);
+        const fDate = Intl.DateTimeFormat("pt-BR", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "2-digit",
+        }).format(
+          item.transactionDate ? new Date(item.transactionDate) : Date.now()
+        );
+
+        return {
+          id: item.id,
+          name: item.name,
+          amount: fAmount,
+          type: item.type,
+          category: item.category,
+          transactionDate: fDate,
+        };
+      }
+    );
+
+    setCardData(formatedTransactions);
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    loadTransactions();
+  }, []);
 
   return (
     <Container>
