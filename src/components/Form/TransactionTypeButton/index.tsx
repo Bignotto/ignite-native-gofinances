@@ -4,13 +4,13 @@ import { TouchableOpacityProps } from "react-native";
 import { Container, Icon, Title } from "./styles";
 
 const icons = {
-  up: "arrow-up-circle",
-  down: "arrow-down-circle",
+  income: "arrow-up-circle",
+  outcome: "arrow-down-circle",
 };
 
 interface Props extends TouchableOpacityProps {
   title: string;
-  type: "up" | "down";
+  type: "income" | "outcome";
   isSelected: boolean;
 }
 

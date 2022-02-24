@@ -6,12 +6,12 @@ import { TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 interface IconProps {
-  type: "up" | "down";
+  type: "income" | "outcome";
 }
 
 interface TransactionProps {
   isSelected: boolean;
-  type: "up" | "down";
+  type: "income" | "outcome";
 }
 
 export const Container = styled(TouchableOpacity)<TransactionProps>`
@@ -30,14 +30,14 @@ export const Container = styled(TouchableOpacity)<TransactionProps>`
 
   ${({ isSelected, type }) =>
     isSelected &&
-    type === "up" &&
+    type === "income" &&
     css`
       background-color: ${({ theme }) => theme.colors.success_light};
     `}
 
   ${({ isSelected, type }) =>
     isSelected &&
-    type === "down" &&
+    type === "outcome" &&
     css`
       background-color: ${({ theme }) => theme.colors.attention_light};
     `}
@@ -47,7 +47,7 @@ export const Icon = styled(Feather)<IconProps>`
   font-size: ${RFValue(24)}px;
   margin-right: 12px;
   color: ${({ theme, type }) =>
-    type === "up" ? theme.colors.success : theme.colors.attention};
+    type === "income" ? theme.colors.success : theme.colors.attention};
 `;
 
 export const Title = styled.Text`

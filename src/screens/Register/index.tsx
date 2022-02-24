@@ -78,6 +78,7 @@ export function Register() {
     };
 
     try {
+      // await AsyncStorage.clear();
       const storageData = await AsyncStorage.getItem(dataKey);
       const transactions = storageData ? JSON.parse(storageData) : [];
       console.log({ transactions });
@@ -97,7 +98,7 @@ export function Register() {
     }
   }
 
-  function handleSelectType(type: "up" | "down") {
+  function handleSelectType(type: "income" | "outcome") {
     setTransactionType(type);
   }
   function handleCloseSelectCategoryModal() {
@@ -133,15 +134,15 @@ export function Register() {
             <TransactionTypes>
               <TransactionTypeButton
                 title="Entrada"
-                type="up"
-                onPress={() => handleSelectType("up")}
-                isSelected={transactionType === "up"}
+                type="income"
+                onPress={() => handleSelectType("income")}
+                isSelected={transactionType === "income"}
               />
               <TransactionTypeButton
                 title="Saída"
-                type="down"
-                isSelected={transactionType === "down"}
-                onPress={() => handleSelectType("down")}
+                type="outcome"
+                isSelected={transactionType === "outcome"}
+                onPress={() => handleSelectType("outcome")}
               />
             </TransactionTypes>
             <CategorySelectButton
