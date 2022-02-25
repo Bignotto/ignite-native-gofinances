@@ -22,7 +22,10 @@ import {
   TransactionCards,
   Title,
   TransactionsList,
+  Loading,
 } from "./styles";
+import { ActivityIndicator } from "react-native";
+import { useTheme } from "styled-components";
 
 interface HighlightCardProps {
   amount: string;
@@ -38,10 +41,14 @@ export interface CardListProps extends TransactionCardsProps {
 }
 
 export function Dashboard() {
+  const [isLoading, setIsLoading] = useState(true);
+
   const [cardData, setCardData] = useState<CardListProps[]>([]);
 
   const [highlightCardsData, setHighlightCardsData] =
     useState<HighlightCardsData>();
+
+  const theme = useTheme();
 
   async function loadTransactions() {
     const dataKey = "@gofinances/transactions";
@@ -105,6 +112,7 @@ export function Dashboard() {
     });
 
     setCardData(formatedTransactions);
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -119,62 +127,70 @@ export function Dashboard() {
 
   return (
     <Container>
-      <Header>
-        <UserWrapper>
-          <UserInfo>
-            <Photo
-              source={{
-                uri: "https://avatars.githubusercontent.com/u/2911353?v=4",
-              }}
+      {isLoading ? (
+        <Loading>
+          <ActivityIndicator color={theme.colors.primary} size="large" />
+        </Loading>
+      ) : (
+        <>
+          <Header>
+            <UserWrapper>
+              <UserInfo>
+                <Photo
+                  source={{
+                    uri: "https://avatars.githubusercontent.com/u/2911353?v=4",
+                  }}
+                />
+                <User>
+                  <UserGreeting>Olá,</UserGreeting>
+                  <UserName>Thiago!</UserName>
+                </User>
+              </UserInfo>
+              <Icon name="power" />
+            </UserWrapper>
+          </Header>
+
+          <HighlightCards
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingHorizontal: 12 }}
+          >
+            <HighlightCard
+              amount={
+                highlightCardsData ? highlightCardsData.income.amount : "R$ 0"
+              }
+              title="Entradas"
+              lastTransaction="Último movimento em 13 janeiro 2022"
+              type="income"
             />
-            <User>
-              <UserGreeting>Olá,</UserGreeting>
-              <UserName>Thiago!</UserName>
-            </User>
-          </UserInfo>
-          <Icon name="power" />
-        </UserWrapper>
-      </Header>
+            <HighlightCard
+              amount={
+                highlightCardsData ? highlightCardsData.outcome.amount : "R$ 0"
+              }
+              title="Saídas"
+              lastTransaction="Último movimento em 31 janeiro 2022"
+              type="outcome"
+            />
+            <HighlightCard
+              amount={
+                highlightCardsData ? highlightCardsData.balance.amount : "R$ 0"
+              }
+              title="Total"
+              lastTransaction="Último movimento em 13 janeiro 2022"
+              type="total"
+            />
+          </HighlightCards>
 
-      <HighlightCards
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 12 }}
-      >
-        <HighlightCard
-          amount={
-            highlightCardsData ? highlightCardsData.income.amount : "R$ 0"
-          }
-          title="Entradas"
-          lastTransaction="Último movimento em 13 janeiro 2022"
-          type="income"
-        />
-        <HighlightCard
-          amount={
-            highlightCardsData ? highlightCardsData.outcome.amount : "R$ 0"
-          }
-          title="Saídas"
-          lastTransaction="Último movimento em 31 janeiro 2022"
-          type="outcome"
-        />
-        <HighlightCard
-          amount={
-            highlightCardsData ? highlightCardsData.balance.amount : "R$ 0"
-          }
-          title="Total"
-          lastTransaction="Último movimento em 13 janeiro 2022"
-          type="total"
-        />
-      </HighlightCards>
-
-      <TransactionCards>
-        <Title>Transações</Title>
-        <TransactionsList
-          data={cardData}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <TransactionCard data={item} />}
-        />
-      </TransactionCards>
+          <TransactionCards>
+            <Title>Transações</Title>
+            <TransactionsList
+              data={cardData}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => <TransactionCard data={item} />}
+            />
+          </TransactionCards>
+        </>
+      )}
     </Container>
   );
 }
