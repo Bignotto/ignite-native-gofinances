@@ -7,6 +7,7 @@ import {
   TransactionCard,
   TransactionCardsProps,
 } from "../../components/TransactionCard";
+
 import {
   Container,
   Header,
@@ -23,6 +24,15 @@ import {
   TransactionsList,
 } from "./styles";
 
+interface HighlightCardProps {
+  amount: string;
+}
+
+interface HighlightCardsData {
+  income: HighlightCardProps;
+  outcome: HighlightCardProps;
+  balance: HighlightCardProps;
+}
 export interface CardListProps extends TransactionCardsProps {
   id: string;
 }
@@ -30,19 +40,29 @@ export interface CardListProps extends TransactionCardsProps {
 export function Dashboard() {
   const [cardData, setCardData] = useState<CardListProps[]>([]);
 
+  const [highlightCardsData, setHighlightCardsData] =
+    useState<HighlightCardsData>();
+
   async function loadTransactions() {
     const dataKey = "@gofinances/transactions";
 
     const storageData = await AsyncStorage.getItem(dataKey);
     const transactions = storageData ? JSON.parse(storageData) : [];
 
-    //TODO: format transactions
+    let totalIncomeValue = 0;
+    let totalOutcomeValue = 0;
+
     const formatedTransactions: CardListProps[] = transactions.map(
       (item: CardListProps) => {
         const fAmount = Number(item.amount).toLocaleString("pt-BR", {
           style: "currency",
           currency: "BRL",
         });
+
+        if (item.transactionType === "income")
+          totalIncomeValue += Number(item.amount);
+        if (item.transactionType === "outcome")
+          totalOutcomeValue += Number(item.amount);
 
         const fDate = Intl.DateTimeFormat("pt-BR", {
           day: "2-digit",
@@ -62,7 +82,28 @@ export function Dashboard() {
         };
       }
     );
-    console.log({ formatedTransactions });
+
+    setHighlightCardsData({
+      income: {
+        amount: totalIncomeValue.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }),
+      },
+      outcome: {
+        amount: totalOutcomeValue.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }),
+      },
+      balance: {
+        amount: (totalIncomeValue - totalOutcomeValue).toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }),
+      },
+    });
+
     setCardData(formatedTransactions);
   }
 
@@ -101,19 +142,25 @@ export function Dashboard() {
         contentContainerStyle={{ paddingHorizontal: 12 }}
       >
         <HighlightCard
-          amount="R$ 1.740,00"
+          amount={
+            highlightCardsData ? highlightCardsData.income.amount : "R$ 0"
+          }
           title="Entradas"
           lastTransaction="Último movimento em 13 janeiro 2022"
           type="income"
         />
         <HighlightCard
-          amount="R$ 860,00"
+          amount={
+            highlightCardsData ? highlightCardsData.outcome.amount : "R$ 0"
+          }
           title="Saídas"
           lastTransaction="Último movimento em 31 janeiro 2022"
           type="outcome"
         />
         <HighlightCard
-          amount="R$ 16.141,00"
+          amount={
+            highlightCardsData ? highlightCardsData.balance.amount : "R$ 0"
+          }
           title="Total"
           lastTransaction="Último movimento em 13 janeiro 2022"
           type="total"
