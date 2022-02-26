@@ -74,7 +74,7 @@ export function Register() {
       amount,
       transactionType,
       category: selectedCategory.key,
-      date: Date.now(),
+      transactionDate: Date.now(),
     };
 
     try {

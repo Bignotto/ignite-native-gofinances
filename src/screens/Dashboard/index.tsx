@@ -29,6 +29,7 @@ import { useTheme } from "styled-components";
 
 interface HighlightCardProps {
   amount: string;
+  lastDate: string;
 }
 
 interface HighlightCardsData {
@@ -50,14 +51,39 @@ export function Dashboard() {
 
   const theme = useTheme();
 
+  function getLastTransactionDate(transactions: CardListProps[]) {
+    return Intl.DateTimeFormat("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "2-digit",
+    }).format(
+      Math.max.apply(
+        Math,
+        transactions.map((t) => Number(t.transactionDate))
+      )
+    );
+  }
+
   async function loadTransactions() {
     const dataKey = "@gofinances/transactions";
 
     const storageData = await AsyncStorage.getItem(dataKey);
-    const transactions = storageData ? JSON.parse(storageData) : [];
+    const transactions: CardListProps[] = storageData
+      ? JSON.parse(storageData)
+      : [];
 
     let totalIncomeValue = 0;
     let totalOutcomeValue = 0;
+
+    const lastIncomeDate = getLastTransactionDate(
+      transactions.filter((t) => t.transactionType === "income")
+    );
+
+    const lastOutcomeDate = getLastTransactionDate(
+      transactions.filter((t) => t.transactionType === "income")
+    );
+
+    const lasTransactionDate = getLastTransactionDate(transactions);
 
     const formatedTransactions: CardListProps[] = transactions.map(
       (item: CardListProps) => {
@@ -96,18 +122,21 @@ export function Dashboard() {
           style: "currency",
           currency: "BRL",
         }),
+        lastDate: lastIncomeDate,
       },
       outcome: {
         amount: totalOutcomeValue.toLocaleString("pt-BR", {
           style: "currency",
           currency: "BRL",
         }),
+        lastDate: lastOutcomeDate,
       },
       balance: {
         amount: (totalIncomeValue - totalOutcomeValue).toLocaleString("pt-BR", {
           style: "currency",
           currency: "BRL",
         }),
+        lastDate: lasTransactionDate,
       },
     });
 
@@ -160,7 +189,11 @@ export function Dashboard() {
                 highlightCardsData ? highlightCardsData.income.amount : "R$ 0"
               }
               title="Entradas"
-              lastTransaction="Último movimento em 13 janeiro 2022"
+              lastTransaction={
+                highlightCardsData
+                  ? highlightCardsData.income.lastDate
+                  : "0/0/0"
+              }
               type="income"
             />
             <HighlightCard
@@ -168,7 +201,11 @@ export function Dashboard() {
                 highlightCardsData ? highlightCardsData.outcome.amount : "R$ 0"
               }
               title="Saídas"
-              lastTransaction="Último movimento em 31 janeiro 2022"
+              lastTransaction={
+                highlightCardsData
+                  ? highlightCardsData.outcome.lastDate
+                  : "0/0/0"
+              }
               type="outcome"
             />
             <HighlightCard
@@ -176,7 +213,11 @@ export function Dashboard() {
                 highlightCardsData ? highlightCardsData.balance.amount : "R$ 0"
               }
               title="Total"
-              lastTransaction="Último movimento em 13 janeiro 2022"
+              lastTransaction={
+                highlightCardsData
+                  ? highlightCardsData.balance.lastDate
+                  : "0/0/0"
+              }
               type="total"
             />
           </HighlightCards>
