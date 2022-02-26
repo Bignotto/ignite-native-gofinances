@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Modal, TouchableWithoutFeedback, Keyboard, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import uuid from "react-native-uuid";
+import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
 
 import * as Yup from "yup";
@@ -19,6 +22,10 @@ import {
   Fields,
   TransactionTypes,
 } from "./styles";
+
+type NavigationProps = {
+  navigate: (screen: string) => void;
+};
 
 interface FormData {
   [name: string]: any;
@@ -42,24 +49,56 @@ export function Register() {
     key: "category",
     name: "Categoria",
   });
+  const dataKey = "@gofinances/transactions";
+
+  const navigation = useNavigation<NavigationProps>();
 
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  function handleRegister({ name, amount }: FormData) {
+  async function handleRegister({ name, amount }: FormData) {
     if (!transactionType) return Alert.alert("Selecione o tipo da transação!");
+
     if (selectedCategory.key === "category")
       return Alert.alert("Selecione a categoria da transação!");
 
-    console.log({ name, amount });
+    const newTransaction = {
+      id: String(uuid.v4()),
+      name,
+      amount,
+      transactionType,
+      category: selectedCategory.key,
+      transactionDate: Date.now(),
+    };
+
+    try {
+      // await AsyncStorage.clear();
+      const storageData = await AsyncStorage.getItem(dataKey);
+      const transactions = storageData ? JSON.parse(storageData) : [];
+      console.log({ transactions });
+
+      const newTransactions = [...transactions, newTransaction];
+
+      await AsyncStorage.setItem(dataKey, JSON.stringify(newTransactions));
+
+      reset();
+      setTransactionType("");
+      setSelectedCategory({ key: "category", name: "Categoria" });
+
+      navigation.navigate("Listagem");
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Algum proglema com async storage");
+    }
   }
 
-  function handleSelectType(type: "up" | "down") {
+  function handleSelectType(type: "income" | "outcome") {
     setTransactionType(type);
   }
   function handleCloseSelectCategoryModal() {
@@ -95,15 +134,15 @@ export function Register() {
             <TransactionTypes>
               <TransactionTypeButton
                 title="Entrada"
-                type="up"
-                onPress={() => handleSelectType("up")}
-                isSelected={transactionType === "up"}
+                type="income"
+                onPress={() => handleSelectType("income")}
+                isSelected={transactionType === "income"}
               />
               <TransactionTypeButton
                 title="Saída"
-                type="down"
-                isSelected={transactionType === "down"}
-                onPress={() => handleSelectType("down")}
+                type="outcome"
+                isSelected={transactionType === "outcome"}
+                onPress={() => handleSelectType("outcome")}
               />
             </TransactionTypes>
             <CategorySelectButton
