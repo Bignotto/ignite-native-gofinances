@@ -52,6 +52,8 @@ export function Dashboard() {
   const theme = useTheme();
 
   function getLastTransactionDate(transactions: CardListProps[]) {
+    if (transactions.length === 0) return "";
+
     return Intl.DateTimeFormat("pt-BR", {
       day: "2-digit",
       month: "2-digit",
@@ -87,6 +89,7 @@ export function Dashboard() {
 
     const formatedTransactions: CardListProps[] = transactions.map(
       (item: CardListProps) => {
+        console.log("map", { item });
         const fAmount = Number(item.amount).toLocaleString("pt-BR", {
           style: "currency",
           currency: "BRL",
