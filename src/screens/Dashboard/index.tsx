@@ -89,7 +89,6 @@ export function Dashboard() {
 
     const formatedTransactions: CardListProps[] = transactions.map(
       (item: CardListProps) => {
-        console.log("map", { item });
         const fAmount = Number(item.amount).toLocaleString("pt-BR", {
           style: "currency",
           currency: "BRL",

@@ -1,3 +1,4 @@
+import { CategorySummaryCard } from "../../components/Form/CategorySummaryCard";
 import { Container, Header, Title } from "./styles";
 
 export function Resume() {
@@ -6,6 +7,8 @@ export function Resume() {
       <Header>
         <Title>Resumo por Categoria</Title>
       </Header>
+      <CategorySummaryCard />
+      <CategorySummaryCard />
     </Container>
   );
 }
