@@ -55,7 +55,10 @@ export function Resume() {
       : [];
 
     const outcomeTransactions = transactions.filter(
-      (t) => t.transactionType === "outcome"
+      (t) =>
+        t.transactionType === "outcome" &&
+        new Date(t.transactionDate).getMonth() === selectedDate.getMonth() &&
+        new Date(t.transactionDate).getFullYear() === selectedDate.getFullYear()
     );
 
     outcomeTransactions.forEach((t) => {
@@ -74,15 +77,18 @@ export function Resume() {
       };
     });
 
-    console.log(newChartData);
     setChartData(newChartData);
     setCategoriesSummary(newSummary);
   }
 
+  // useEffect(() => {
+  //   loadTransactions();
+  // }, [selectedDate]);
+
   useFocusEffect(
     useCallback(() => {
       loadTransactions();
-    }, [])
+    }, [selectedDate])
   );
 
   return (
