@@ -81,7 +81,6 @@ export function Register() {
       // await AsyncStorage.clear();
       const storageData = await AsyncStorage.getItem(dataKey);
       const transactions = storageData ? JSON.parse(storageData) : [];
-      console.log({ transactions });
 
       const newTransactions = [...transactions, newTransaction];
 

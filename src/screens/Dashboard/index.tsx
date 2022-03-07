@@ -52,6 +52,8 @@ export function Dashboard() {
   const theme = useTheme();
 
   function getLastTransactionDate(transactions: CardListProps[]) {
+    if (transactions.length === 0) return "";
+
     return Intl.DateTimeFormat("pt-BR", {
       day: "2-digit",
       month: "2-digit",
