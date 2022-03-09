@@ -7,6 +7,7 @@ import {
   TitleWrapper,
   SignInTitle,
   Footer,
+  SignInButtons,
 } from "./styles";
 
 import AppleLogo from "../../assets/apple.svg";
@@ -14,6 +15,7 @@ import GoogleLogo from "../../assets/google.svg";
 import AppLogo from "../../assets/logo.svg";
 
 import { RFValue } from "react-native-responsive-fontsize";
+import { SignInSocialButton } from "../../components/SignInSocialButton";
 
 export function SignIn() {
   return (
@@ -30,7 +32,12 @@ export function SignIn() {
         </SignInTitle>
       </Header>
 
-      <Footer></Footer>
+      <Footer>
+        <SignInButtons>
+          <SignInSocialButton title="Entre com Google" svg={GoogleLogo} />
+          <SignInSocialButton title="Entre com Apple" svg={AppleLogo} />
+        </SignInButtons>
+      </Footer>
     </Container>
   );
 }
