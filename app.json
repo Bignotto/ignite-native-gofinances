@@ -2,7 +2,7 @@
   "expo": {
     "name": "ignite-native-gofinances",
     "slug": "ignite-native-gofinances",
-    "schema": "ignite-native-gofinances",
+    "scheme": "ignite-native-gofinances",
     "version": "1.0.0",
     "assetBundlePatterns": ["**/*"]
   },

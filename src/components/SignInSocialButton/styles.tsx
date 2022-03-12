@@ -2,9 +2,7 @@ import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { TouchableOpacity } from "react-native";
 
-export const Button = styled.TouchableOpacity.attrs({
-  activeOpacity: 0.7,
-})`
+export const Button = styled(TouchableOpacity)`
   height: ${RFValue(56)}px;
   background-color: ${({ theme }) => theme.colors.shape};
   border-radius: 5px;
