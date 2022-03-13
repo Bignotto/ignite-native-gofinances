@@ -23,9 +23,11 @@ import {
   Title,
   TransactionsList,
   Loading,
+  LogOutButton,
 } from "./styles";
 import { ActivityIndicator } from "react-native";
 import { useTheme } from "styled-components";
+import { useAuth } from "../../hooks/auth";
 
 interface HighlightCardProps {
   amount: string;
@@ -42,6 +44,7 @@ export interface CardListProps extends TransactionCardsProps {
 }
 
 export function Dashboard() {
+  const { signOut } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   const [cardData, setCardData] = useState<CardListProps[]>([]);
@@ -177,7 +180,9 @@ export function Dashboard() {
                   <UserName>Thiago!</UserName>
                 </User>
               </UserInfo>
-              <Icon name="power" />
+              <LogOutButton onPress={signOut}>
+                <Icon name="power" />
+              </LogOutButton>
             </UserWrapper>
           </Header>
 

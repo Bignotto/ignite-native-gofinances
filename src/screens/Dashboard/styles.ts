@@ -3,6 +3,7 @@ import { FlatList, FlatListProps } from "react-native";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { Feather } from "@expo/vector-icons";
 import { CardListProps } from "./index";
+import { TouchableOpacity } from "react-native";
 
 export const Container = styled.View`
   flex: 1;
@@ -96,3 +97,5 @@ export const TransactionsList = styled(
 ).attrs({
   showsVerticalScrollIndicator: false,
 })``;
+
+export const LogOutButton = styled(TouchableOpacity)``;

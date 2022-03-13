@@ -19,6 +19,7 @@ const { REDIRECT_URI } = process.env;
 interface IAuthContextData {
   user: User;
   signInWithGoogle(): Promise<void>;
+  signOut(): Promise<void>;
 }
 
 interface AuthorizationResponse {
@@ -66,6 +67,11 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
+  async function signOut() {
+    setUser({} as User);
+    await AsyncStorage.removeItem(userStorageKey);
+  }
+
   useEffect(() => {
     async function loadLoggedUser() {
       const storageUser = await AsyncStorage.getItem(userStorageKey);
@@ -79,7 +85,7 @@ function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, signInWithGoogle }}>
+    <AuthContext.Provider value={{ user, signInWithGoogle, signOut }}>
       {children}
     </AuthContext.Provider>
   );
