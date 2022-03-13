@@ -4,8 +4,9 @@ import "intl/locale-data/jsonp/pt-BR";
 import React from "react";
 import AppLoading from "expo-app-loading";
 import { StatusBar } from "expo-status-bar";
-import { NavigationContainer } from "@react-navigation/native";
 import { ThemeProvider } from "styled-components/native";
+
+import { Routes } from "./src/routes";
 
 import {
   useFonts,
@@ -15,8 +16,6 @@ import {
 } from "@expo-google-fonts/poppins";
 
 import theme from "./src/global/styles/theme";
-import { AppRoutes } from "./src/routes/app.routes";
-import { SignIn } from "./src/screens/SignIn";
 import { AuthProvider } from "./src/hooks/auth";
 
 export default function App() {
@@ -31,12 +30,10 @@ export default function App() {
   }
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        <AuthProvider>
-          <StatusBar style="inverted" />
-          <SignIn />
-        </AuthProvider>
-      </NavigationContainer>
+      <AuthProvider>
+        <StatusBar style="inverted" />
+        <Routes />
+      </AuthProvider>
     </ThemeProvider>
   );
 }
