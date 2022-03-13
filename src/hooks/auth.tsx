@@ -1,10 +1,13 @@
-import React, { createContext, ReactNode, useContext } from "react";
+import React, { createContext, ReactNode, useContext, useState } from "react";
 
 import * as AuthSession from "expo-auth-session";
 
 interface AuthProviderProps {
   children: ReactNode;
 }
+
+const { CLIENT_ID } = process.env;
+const { REDIRECT_URI } = process.env;
 
 interface IAuthContextData {
   user: User;
@@ -21,19 +24,10 @@ interface AuthorizationResponse {
 const AuthContext = createContext({} as IAuthContextData);
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const user = {
-    id: "12345",
-    name: "Big Developer",
-    email: "bignotto@gmail.com",
-  };
+  const [user, setUser] = useState<User>({} as User);
 
   async function signInWithGoogle() {
     try {
-      console.log("signInWithGoogle!!");
-      const CLIENT_ID =
-        "279567661806-djc3tj7l3h0jbflt49hf4liheo1sp3ok.apps.googleusercontent.com";
-      const REDIRECT_URI =
-        "https://auth.expo.io/@bignotto/ignite-native-gofinances";
       const RESPONSE_TYPE = "token";
       const SCOPE = encodeURI("profile email");
 
@@ -47,11 +41,14 @@ function AuthProvider({ children }: AuthProviderProps) {
         const response = await fetch(
           `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${params.access_token}`
         );
-        const userinfo = await response.json();
-        console.log(userinfo);
+        const userResponse = await response.json();
+        setUser({
+          name: userResponse.given_name,
+          email: userResponse.email,
+          id: userResponse.id,
+          photo: userResponse.picture,
+        });
       }
-
-      //TODO: 25:33: complete google auth code ant test it!
     } catch (error) {
       throw new Error(`signInWithGoogle: ${error}`);
     }

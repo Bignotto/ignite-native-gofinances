@@ -22,7 +22,6 @@ export function SignIn() {
 
   async function handleSignInWithGoogle() {
     try {
-      console.log("handleSignInWithGoogle");
       await signInWithGoogle();
     } catch (error) {
       console.log(error);
