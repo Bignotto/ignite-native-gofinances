@@ -20,6 +20,7 @@ interface IAuthContextData {
   user: User;
   signInWithGoogle(): Promise<void>;
   signOut(): Promise<void>;
+  isLoading: boolean;
 }
 
 interface AuthorizationResponse {
@@ -85,7 +86,9 @@ function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, signInWithGoogle, signOut }}>
+    <AuthContext.Provider
+      value={{ user, signInWithGoogle, signOut, isLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );
