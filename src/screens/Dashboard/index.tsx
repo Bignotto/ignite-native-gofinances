@@ -44,7 +44,7 @@ export interface CardListProps extends TransactionCardsProps {
 }
 
 export function Dashboard() {
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
   const [cardData, setCardData] = useState<CardListProps[]>([]);
@@ -172,12 +172,12 @@ export function Dashboard() {
               <UserInfo>
                 <Photo
                   source={{
-                    uri: "https://avatars.githubusercontent.com/u/2911353?v=4",
+                    uri: user.photo,
                   }}
                 />
                 <User>
                   <UserGreeting>Olá,</UserGreeting>
-                  <UserName>Thiago!</UserName>
+                  <UserName>{user.name}!</UserName>
                 </User>
               </UserInfo>
               <LogOutButton onPress={signOut}>

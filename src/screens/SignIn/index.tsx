@@ -31,7 +31,6 @@ export function SignIn() {
     } catch (error) {
       console.log(error);
       Alert.alert("Não foi possível fazer login com google.");
-    } finally {
       setIsLoading(false);
     }
   }
